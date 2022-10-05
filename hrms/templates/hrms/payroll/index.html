@@ -65,6 +65,9 @@
                            <td>
                             {{emp.salary}}
                           </td>
+                          <td>
+                            <a href="{% url 'hrms:createPayroll' id=emp.id %}" class="btn btn-small btn-danger">Payroll</a>
+                          </td>
                            <td>
                             <button  type='button' onclick="payWithPaystack('{{emp.salary}}','{{emp.nuban}}','{{emp.bank}}')"  class="btn btn-info">  Pay</button>
                           </td>

@@ -1,3 +1,6 @@
+import email
+import imp
+import json
 from django.shortcuts import render, redirect, resolve_url, reverse, get_object_or_404
 from django.urls import reverse_lazy
 from django.contrib.auth import get_user_model
@@ -11,6 +14,16 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
 from django.utils import timezone
 from django.db.models import Q
+from django.views.decorators.csrf import csrf_exempt
+from flask import flash, Flask, render_template
+from werkzeug.utils import secure_filename
+import os
+from .models import Recruitment
+
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
+
+app = Flask(__name__, template_folder='',
+            static_folder='.hrms/applicationForm/lib', )
 
 
 # Create your views here.
@@ -220,11 +233,16 @@ class Payroll(LoginRequiredMixin, ListView):
     context_object_name = 'stfpay'
 
 
+# class RecruitmentNew (CreateView):
+#     model = Recruitment
+#     template_name = 'hrms/recruitment/index.html'
+#     form_class = RecruitmentForm
+#     success_url = reverse_lazy('hrms:recruitment')
+
 class RecruitmentNew (CreateView):
     model = Recruitment
     template_name = 'hrms/applicationForm/applicationForm.html'
     form_class = RecruitmentForm
-    # success_url = reverse_lazy('hrms:recruitment')
 
 
 class RecruitmentAll(LoginRequiredMixin, ListView):
@@ -249,6 +267,9 @@ class Pay(LoginRequiredMixin, ListView):
     context_object_name = 'emps'
     login_url = 'hrms:login'
 
+######################################################################
+# Algorithm here
+
 
 def job(request):
     return render(request, 'hrms/recruitment/index.html')
@@ -262,5 +283,95 @@ def index2(request):
     return render(request, 'hrms/recruitment/java-2.html')
 
 
+key = ['Oracle', 'Microsoft SQL', 'Bash', 'Python', 'Go', 'Java', 'HTML/CSS', 'JavaScript', 'jQuery', 'Tableau',
+       'Power BI', 'Google Data Studio', 'Tensorflow', 'Keras', 'PyTorch', 'Azuze', 'UI Design', 'Front-End']
+
+thisdict = {
+    "1": 0,
+    "2": 5,
+    "3": 7,
+    "4": 10
+}
+
+jobdict = {
+    "AI Engineer": ['Java', 'Python', 'Tensorflow', 'Keras', 'PyTorch', 'UI Design', 'Front-End'],
+    "Data Engineer": ['Python', 'Azure', 'Oracle', 'Microsoft SQL', 'JavaScript', 'jQuery', 'Tableau'],
+    "Data Analyst": ['Python', 'Oracle', 'Microsoft SQL', 'Tableau', 'Power BI', 'Google Data Studio', 'jQuery'],
+    "Java Developer": ['Java', 'JavaScript', 'UI Design', 'Front-End', 'HTML/CSS', 'Microsoft SQL', 'Azuze'],
+    "Software Engineer": ['Java', 'Python', 'Go', 'Azure', 'Tensorflow', 'Keras', 'PyTorch'],
+    "Business Operations Manager": ['Microsoft SQL', 'Tableau', 'Power BI', 'Google Data Studio', 'Oracle', 'UI Design', 'Front-End']
+}
+
+
 def applicationForm(request):
-    return render(request, 'hrms/applicationForm/applicationForm.html')
+    return render(request, 'hrms/applicationForm/applicationForm.html',
+                  {
+                      'key': key
+                  })
+
+
+def estScore(x, keyword, exp, gradute):
+    listContrans = set(x) & set(keyword)
+    print('go go: ', x)
+    print("anwg  ang:", keyword)
+    score = len(listContrans) / 7 * 100
+    scoreExp = thisdict[exp[0]]
+    print("scoreChoose :", score)
+    print("scoreExp :", scoreExp)
+    scoreGradute = 0
+
+    if(gradute[0] == "1"):
+        scoreGradute += 5
+    print("scoreGradute :", scoreGradute)
+
+    # for i in x:
+    #     if i in keyword:
+    #         score+=1
+    score += scoreGradute + scoreExp
+    if(score > 100):
+        score = 100
+    return score
+
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+@csrf_exempt
+def formProcess(request):
+    if request.method == 'POST':
+        # Information handle
+        # print(request.form)
+        formOut = dict(request.POST.lists())
+        print(formOut)
+        keyword = []
+        data = formOut['Application for']
+        keyword = jobdict[data[0]]
+        print(keyword)
+        score = estScore(formOut['select-tag'], keyword,
+                         formOut['exp'], formOut['graduate'])
+        print("score final :", score)
+
+        first_name = formOut['First name'][0]
+        family_name = formOut['Family name'][0]
+        position = formOut['Application for'][0]
+        phone = formOut['Phone'][0]
+        email = formOut['Email'][0]
+        cv = formOut['MAX_FILE_SIZE'][0]
+        if score > 85:
+            status = 'Pass!'
+        elif score > 70:
+            status = 'Waitlist'
+        else:
+            status = 'Failed'
+        # Resume Upload handle
+        #
+
+        candidate = Recruitment(first_name=first_name, last_name=family_name,
+                                position=position, email=email, phone=phone, score=score, status=status, resume=None)
+
+        candidate.save()
+    return render(request, 'hrms/applicationForm/formProcess.html',
+                  {
+                      'score': score
+                  })

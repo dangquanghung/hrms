@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-from .models import Employee, Department, Kin, Attendance, Leave, Recruitment
+from .models import Employee, Department, Kin, Attendance, Leave, Recruitment, Payroll
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django import forms
 from django.core import validators
@@ -132,4 +132,17 @@ class RecruitmentForm(forms.ModelForm):
             'score': forms.NumberInput(attrs={'class': 'form-control'}),
             'status': forms.TextInput(attrs={'class': 'form-control'}),
             'resume': forms.FileInput()
+        }
+
+class PayrollForm(forms.ModelForm):
+    class Meta:
+        model = Payroll
+        fields = '__all__'
+        widgets = {
+            'emp_id': forms.TextInput(attrs={'class': 'form-control'}),
+            'month': forms.NumberInput(attrs={'class': 'form-control'}),
+            'work_day': forms.NumberInput(attrs={'class': 'form-control'}),
+            'bonus': forms.NumberInput(attrs={'class': 'form-control'}),
+            'insurance': forms.NumberInput(attrs={'class': 'form-control'}),
+            'pay_rate': forms.NumberInput(attrs={'class': 'form-control'})
         }
