@@ -112,3 +112,21 @@ class Recruitment(models.Model):
 
     def __str__(self):
         return self.first_name + ' - '+self.position
+
+class Payroll(models.Model):
+    emp_id = models.FloatField(max_length=25, null=False)
+    month = models.FloatField(max_length=25, null=False)
+    work_day = models.IntegerField(max_length=15, null=False)
+    bonus = models.FloatField(max_length=25, null=False)
+    insurance = models.FloatField(max_length=25, null=False)
+    pay_rate = models.FloatField(max_length=11, null=False)
+
+    def get_absolute_url(self):
+        return reverse("hrms:createPayroll", kwargs={'pk': self.emp_id.pk})
+    def __str__(self):
+        return self.emp_id + ' - '+self.month
+
+class Salary(models.Model):
+    emp_id = models.IntegerField(max_length=70, null=False)
+    month = models.FloatField(max_length=25, null=False)
+    total = models.CharField(max_length=15, null=False)

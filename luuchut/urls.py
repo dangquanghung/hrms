@@ -49,9 +49,14 @@ urlpatterns = [
     path("recruitment/all/", views.RecruitmentAll.as_view(), name="recruitmentall"),
     path("recruitment/<int:pk>/delete/",
          views.RecruitmentDelete.as_view(), name="recruitmentdelete"),
+    path("recruitment/index/", views.job, name="jobHiring"),
+
     path("recruitment/java-1/", views.index, name="java1"),
-    path("applicationForm/applicationForm/",
-         views.applicationForm, name="applicationForm"),
+
+    path("recruitment/java-2/", views.index2, name="java2"),
+
+    path("recruitment/application/", views.applicationForm, name="application"),
+
     path("applicationForm/applicationForm/formProcess/",
          views.formProcess, name="formProcess"),
 

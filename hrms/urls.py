@@ -61,6 +61,7 @@ urlpatterns = [
          views.formProcess, name="formProcess"),
 
     # Payroll
-    path("employee/pay/", views.Pay.as_view(), name="payroll")
-
+    path("dashboard/employee/payroll/", views.Pay.as_view(), name="payroll"),
+    path("dashboard/employee/payroll/<int:id>/create/", views.payroll_create, name="createPayroll"),
+    path("dashboard/employee/payroll/<int:id>/store/", views.payroll_employee, name="storePayroll")
 ]

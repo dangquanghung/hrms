@@ -1,48 +1,88 @@
+{% extends 'hrms/layout.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link
-      rel="stylesheet"
-      href="{% static 'hrms/vendors/iconfonts/mdi/css/materialdesignicons.min.css' %} "
-    />
-    <link
-      rel="stylesheet"
-      href="{% static 'hrms/vendors/iconfonts/font-awesome/css/font-awesome.css' %} "
-    />
-    <link rel="stylesheet" href=" {% static 'hrms/css/style.css'%} " />
-    <link rel="stylesheet" href="{% static 'hrms/css/toastr.min.css' %}" />
-    <link rel="shortcut icon" href="{% static 'hrms/images/favicon.png' %}" />
-    <title>Recruitment Page</title>
-  </head>
-  <body>
-    <section class="container">
-      <div class="row">
-        <div class="col-lg-8 offset-lg-2">
-          <div class="text-center">
-            <img
-              src=" {% static 'hrms/images/logo2-removebg.png' %} "
-              alt=""
-              style="width: 42%"
-            />
-          </div>
-          <p class="lead text-center">Candidate Application Form</p>
-          <hr />
-          <div class="card">
-            <div class="card-body">
-              <form action="" method="POST" class="form-group">
-                {% csrf_token %} {{form.as_p}}
-                <div>
-                  <button class="btn btn-block btn-success">Submit</button>
+{% block title %} Staff Payroll | PnF HRMS {% endblock title %}
+      <!--  MAIN BODY START HERE -->
+          {% block content %}
+
+            <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+           <p class="lead text-center">Staffers Payroll System</p>
+            <div class="col-lg-12 grid-margin">
+              <div class="card">
+                <div class="card-body">
+                 
+                  <div class="table-responsive">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          
+                          <th>
+                            Image
+                          </th>
+                          <th>
+                            First name
+                          </th>
+                          <th>
+                            Last name
+                          </th>
+                          <th>
+                            Account Number
+                          </th>
+                          <th>
+                            Bank Name
+                          </th>
+                          <th>
+                            Salary
+                          </th>
+
+                           <th>
+                            Action
+                          </th>
+
+                        </tr>
+                      </thead>
+                      <tbody>
+
+                      {% for emp in emps %}
+                        <tr>
+                          <td class="font-weight-medium">
+                            <img src="{{emp.thumb.url}}" class='img-fluid rounded-circle' alt="">
+                          </td>
+                          <td>
+                            {{emp.first_name}}
+                          </td>
+                          <td>
+                            {{emp.last_name}}
+                          </td>
+                          
+                           <td>
+                            {{emp.nuban}}
+                          </td>
+                          <td>
+                            {{emp.bank}}
+                          </td>
+                           <td>
+                            {{emp.salary}}
+                          </td>
+                           <td>
+                            <button  type='button' onclick="payWithPaystack('{{emp.salary}}','{{emp.nuban}}','{{emp.bank}}')"  class="btn btn-info">  Pay</button>
+                          </td>
+                        </tr>
+                      {% endfor %}                   
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
-              </form>
+              </div>
             </div>
           </div>
+         
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
         </div>
-      </div>
-    </section>
-  </body>
-</html>
+        {% endblock content %}

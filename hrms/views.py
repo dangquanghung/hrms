@@ -3,13 +3,14 @@ import imp
 import json
 from django.shortcuts import render, redirect, resolve_url, reverse, get_object_or_404
 from django.urls import reverse_lazy
+from datetime import datetime
 from django.contrib.auth import get_user_model
-from .models import Employee, Department, Kin, Attendance, Leave, Recruitment
+from .models import Employee, Department, Kin, Attendance, Leave, Recruitment, Payroll, Salary
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import FormView, CreateView, View, DetailView, TemplateView, ListView, UpdateView, DeleteView
-from .forms import RegistrationForm, LoginForm, EmployeeForm, KinForm, DepartmentForm, AttendanceForm, LeaveForm, RecruitmentForm
+from .forms import RegistrationForm, LoginForm, EmployeeForm, KinForm, DepartmentForm, AttendanceForm, LeaveForm, RecruitmentForm, PayrollForm
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
 from django.utils import timezone
@@ -226,11 +227,11 @@ class LeaveNew (LoginRequiredMixin, CreateView, ListView):
         return context
 
 
-class Payroll(LoginRequiredMixin, ListView):
-    model = Employee
-    template_name = 'hrms/payroll/index.html'
-    login_url = 'hrms:login'
-    context_object_name = 'stfpay'
+# class PayrollView(LoginRequiredMixin, ListView):
+#     model = Employee
+#     template_name = 'hrms/payroll/index.html'
+#     login_url = 'hrms:login'
+#     context_object_name = 'stfpay'
 
 
 # class RecruitmentNew (CreateView):
@@ -251,7 +252,6 @@ class RecruitmentAll(LoginRequiredMixin, ListView):
     template_name = 'hrms/recruitment/all.html'
     context_object_name = 'recruit'
 
-
 class RecruitmentDelete (LoginRequiredMixin, View):
     login_url = 'hrms:login'
 
@@ -260,7 +260,58 @@ class RecruitmentDelete (LoginRequiredMixin, View):
         form_app.delete()
         return redirect('hrms:recruitmentall', permanent=True)
 
+# class PayrollEmployee(LoginRequiredMixin, ListView):
+    # model = Payroll
+    # login_url = 'hrms:login'
+    # template_name = 'hrms/payroll/create.html'
+    # form_class = PayrollForm
+    # context_object_name = 'emps'
+    # success_url = reverse_lazy('hrms:payroll')
 
+def payroll_create(request, id):
+    form_app = Employee.objects.get(pk=id)
+    field_name_id = form_app._meta.fields[1].name
+    field_name_first_name = form_app._meta.fields[3].name
+    field_name_last_name = form_app._meta.fields[4].name
+
+    emp_id = getattr(form_app, field_name_id)
+    first_name = getattr(form_app, field_name_first_name)
+    last_name = getattr(form_app, field_name_last_name)
+
+
+    return render(request, 'hrms/payroll/create.html',
+                  {
+                      'pk': id,
+                      'id': emp_id,
+                      'first_name': first_name,
+                      'last_name': last_name
+                  })
+@csrf_exempt
+def payroll_employee(request, id):
+
+        formOut = dict(request.POST.lists())
+        emp_id = id
+        month = datetime.now().month
+        work_day = formOut['work_day'][0]
+        bonus = formOut['bonus'][0]
+        insurance = formOut['insurance'][0]
+        pay_rate =formOut['pay_rate'][0]
+
+        payroll = Payroll(emp_id=emp_id, month=month,
+                                work_day=work_day, bonus=bonus, insurance=insurance, pay_rate=pay_rate)
+
+        payroll.save()
+        return render(request, 'hrms/payroll/show.html',
+                  {
+                  })
+        # if 'id' in self.kwargs:
+        #     pay = Employee.objects.get(pk=self.kwargs['id'])
+            
+        #     context['pay'] = pay
+        #     return context
+        # else:
+        #     return context
+    
 class Pay(LoginRequiredMixin, ListView):
     model = Employee
     template_name = 'hrms/payroll/index.html'
@@ -343,7 +394,6 @@ def formProcess(request):
         # Information handle
         # print(request.form)
         formOut = dict(request.POST.lists())
-        print(formOut)
         keyword = []
         data = formOut['Application for']
         keyword = jobdict[data[0]]
