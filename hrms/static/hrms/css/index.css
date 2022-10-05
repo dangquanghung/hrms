@@ -1,0 +1,190 @@
+* {
+    font-family: "Roboto",sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    /* background: linear-gradient(to bottom, #1a9191, #8be4f4); */
+    height: 100vh;
+}
+
+header {
+    position: relative;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    overflow: hidden;
+    height: 180px;
+}
+
+header .container {
+    position: relative;
+    width: 90%;
+    margin: 0 0 0 auto;
+}
+
+header .container h1 {
+    max-width: 323px;
+    margin: 0 auto;
+    letter-spacing: 1px;
+    color: #e05155;
+}
+
+header .container .wave {
+    position: absolute;
+    top: 6%;
+    left: 0;
+    width: 150px;
+}
+
+header .container .circle {
+    position: absolute;
+    top: -55px;
+    right: 0;
+    width: 170px;
+}
+
+header .container .rec {
+    position: absolute;
+    top: 55px;
+    right: -50px;
+    width: 150px;
+}
+
+.job_selection {
+    margin-top: 20px;
+}
+
+.job_selection .container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-left: -15px;
+    margin-right: -15px;
+}
+
+.col-4 {
+    flex: 0 0 33.33333%;
+    max-width: 33.33333%;
+    padding: 0 15px;
+    position: relative;
+}
+
+.content {
+    background-color: #fff;
+    margin-bottom: 20px;
+    padding: 20px;
+    height: 180px;
+    border-radius: 7px;
+    box-shadow: 4px 4px 9px 2px rgb(39 154 169 / 50%);
+}
+
+.content h3 {
+    margin-bottom: 10px;
+}
+
+.location {
+    margin-bottom: 6px;
+    color: rgb(153, 152, 152);
+}
+
+.content .description {
+    color: rgb(30, 30, 30);
+    margin-top: 10px;
+}
+
+.container .overlay {
+    position: absolute;
+    top: 0px;
+    bottom: 20px;
+    right: 15px;
+    left: 15px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 7px;
+    display: none;
+    transition: all linear 5s;
+}
+
+.container .overlay a{
+    padding: 10px 20px;
+    width: 150px;
+    height: 50px;
+    color: white;
+    border-radius: 30px;
+    line-height: 30px;
+    transform: translateX(78%) translateY(122%);
+}
+
+.btn {
+    text-decoration: none;
+    background: linear-gradient(to right, #279aa9, #5fc5cf);
+    display: block;
+    font-size: 18px;
+    text-align: center;
+}
+
+.btn:hover {
+    background: #279aa9;
+}
+
+.content:hover .overlay {
+    display: block;
+}
+
+.job-description {
+    width: 80%;
+    margin: 50px auto;
+}
+
+.job-description h1 {
+    margin-bottom: 20px;
+}
+
+.job-description .location {
+    margin-bottom: 10px;
+}
+
+.job-description h3 {
+    margin: 10px 0px;
+}
+
+ul {
+    list-style: none;
+    margin-left: 40px;
+    line-height: 1.5rem;
+}
+
+ul li {
+    position: relative;
+}
+  
+ul li::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    background-color: #279aa9;
+    position: absolute;
+    left: -14px;
+    top: 9px;
+    border-radius: 50%;
+}
+
+.job-description .container {
+    width: 70%;
+}
+
+.job-description a.btn {
+    width: 250px;
+    border-radius: 30px;
+    padding: 10px 20px;
+    color: white;
+    margin-top: 50px;
+}
+

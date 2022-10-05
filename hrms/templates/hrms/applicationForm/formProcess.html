@@ -1,0 +1,164 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href=" {% static 'hrms/css/index.css'%} " />
+    <title>Document</title>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <img
+          src=" {% static 'hrms/images/wave.png' %} "
+          alt="wave"
+          class="wave"
+        />
+        {% csrf_token %} {% if score > 85 %}
+        <h1>Welcome to round 2</h1>
+        {% endif %} {% if score > 70 and score < 85 %}
+        <h1>We will consider your cv</h1>
+        {% endif %} {% if score < 70 %}
+        <h1>Good luck next js!!!!</h1>
+        {% endif %}
+        <img
+          src="{% static 'hrms/images/shape-1.png' %}"
+          alt="circle"
+          class="circle"
+        />
+        <img
+          src="{% static 'hrms/images/rectangle.png' %}"
+          alt="rec"
+          class="rec"
+        />
+      </div>
+    </header>
+
+    <section class="job_selection">
+      <div class="container">
+        <div class="row">
+          <div class="col-4">
+            <div class="content">
+              <div class="content-main">
+                <h3>Java Developer</h3>
+                <div class="location">
+                  <i class="fa-solid fa-location-dot"></i>
+                  <small>Ho Chi Minh | <span>Full time</span></small>
+                </div>
+                <div class="description">
+                  Developing and enhancement large scale systems using Java
+                  technologies: Collection/Insurance feature, ...
+                </div>
+              </div>
+              <div class="overlay">
+                <a href="{% url 'hrms:java1' %}" class="btn">Details</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="content">
+              <div class="content-main">
+                <h3>Java Team Leader</h3>
+                <div class="location">
+                  <i class="fa-solid fa-location-dot"></i>
+                  <small>Ho Chi Minh | <span>Full time</span></small>
+                </div>
+                <div class="description">
+                  Manage team by assign and tracking tasks of team member;
+                  Mentor and coach junior developers to become fully competent
+                  developers; ...
+                </div>
+              </div>
+              <div class="overlay">
+                <a href="{% url 'hrms:java2' %}" class="btn">Details</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="content">
+              <div class="content-main">
+                <h3>Devops Engineer</h3>
+                <div class="location">
+                  <i class="fa-solid fa-location-dot"></i>
+                  <small>Ho Chi Minh | <span>Full time</span></small>
+                </div>
+                <div class="description">
+                  Develop a migration process for packaging existing services
+                  into containers; Work closely with the development tea ...
+                </div>
+              </div>
+              <div class="overlay">
+                <a href="./devops.html" class="btn">Details</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="content">
+              <div class="content-main">
+                <h3>Tester</h3>
+                <div class="location">
+                  <i class="fa-solid fa-location-dot"></i>
+                  <small>Ho Chi Minh | <span>Full time</span></small>
+                </div>
+                <div class="description">
+                  Create/Modify test-related artifacts (test cases, test report,
+                  test plans); Track and control testing progress, and report to
+                  TL about any quality problems/issues of the project; ...
+                </div>
+              </div>
+              <div class="overlay">
+                <a href="./tester.html" class="btn">Details</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="content">
+              <div class="content-main">
+                <h3>AI Engineer</h3>
+                <div class="location">
+                  <i class="fa-solid fa-location-dot"></i>
+                  <small>Ho Chi Minh | <span>Full time</span></small>
+                </div>
+                <div class="description">
+                  Our mission is to build an end-to-end Machine learning
+                  platform that supports the Data Science team in solving
+                  large-scale problems ...
+                </div>
+              </div>
+              <div class="overlay">
+                <a href="./ai.html" class="btn">Details</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="content">
+              <div class="content-main">
+                <h3>Senior Machine Learning Engineer</h3>
+                <div class="location">
+                  <i class="fa-solid fa-location-dot"></i>
+                  <small>Ho Chi Minh | <span>Full time</span></small>
+                </div>
+                <div class="description">
+                  Building Machine Learning models using your core expertise.
+                  Collaborate with Product and Business to define the Machine
+                  Learning product, focus on Pers...
+                </div>
+              </div>
+              <div class="overlay">
+                <a href="./ml.html" class="btn">Details</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+  <style>
+    h1 {
+      text-align: center;
+      margin-top: 50px;
+    }
+  </style>
+</html>

@@ -1,0 +1,143 @@
+{% extends 'hrms/layout.html' %}
+{% load static %}
+{% block title %} Recruitment | PnF HRMS {% endblock title %}
+      <!--  MAIN BODY START HERE -->
+          {% block content %}
+
+            <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+           <p class="lead text-center">Submitted Application</p>
+            <div class="col-lg-12 grid-margin">
+              <div class="card">
+                <div class="card-body">
+                 
+                  <div class="table-responsive">
+                    <table id="myTable" class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th>
+                            First name
+                          </th>
+                          <th>
+                            Last name
+                          </th>
+                          <th>
+                            Phone
+                          </th>
+                          <th>
+                            Email
+                          </th>
+
+                          <th onclick="sortTable(4)">
+                            Score
+                          </th>
+                          <th>
+                            Position
+                          </th>
+                          <th>
+                            Status
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody id="tbodyCandidate">
+
+                      {% for rc in recruit %}
+                        <tr>
+                          <td class="font-weight-medium">
+                            {{rc.first_name}}
+                          </td>
+                          <td>
+                            {{rc.last_name}}
+                          </td>
+                          <td>
+                            {{rc.phone}}
+                          </td>
+                          <td>
+                            {{rc.email}}
+                          </td>
+                            <td>
+                            {{rc.score}}
+                          </td>
+                          <td>
+                            {{rc.position}}
+                          </td>
+                          <td>
+                            {{rc.status}}
+                          </td>
+                           <td>
+                            <a href="{% url 'hrms:recruitmentdelete' pk=rc.id %}" class="btn btn-small btn-danger">Delete</a>
+                          </td>
+                        </tr>
+                      {% endfor %}                   
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+         
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  <script src="{%  static 'hrms\js\candidate.js' %}"></script>
+  <script src="{%  static 'hrms\js\candidateList.js' %}"></script>
+  <script>function sortTable(n) {
+    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    table = document.getElementById("myTable");
+    switching = true;
+    //Set the sorting direction to ascending:
+    dir = "asc"; 
+    /*Make a loop that will continue until
+    no switching has been done:*/
+    while (switching) {
+      //start by saying: no switching is done:
+      switching = false;
+      rows = table.rows;
+      /*Loop through all table rows (except the
+      first, which contains table headers):*/
+      for (i = 1; i < (rows.length - 1); i++) {
+        //start by saying there should be no switching:
+        shouldSwitch = false;
+        /*Get the two elements you want to compare,
+        one from current row and one from the next:*/
+        x = rows[i].getElementsByTagName("TD")[n];
+        y = rows[i + 1].getElementsByTagName("TD")[n];
+        /*check if the two rows should switch place,
+        based on the direction, asc or desc:*/
+        if (dir == "asc") {
+          if (Number(x.innerHTML) > Number(y.innerHTML)) {
+            //if so, mark as a switch and break the loop:
+            shouldSwitch= true;
+            break;
+          }
+        } else if (dir == "desc") {
+          if (Number(x.innerHTML) < Number(y.innerHTML)) {
+            //if so, mark as a switch and break the loop:
+            shouldSwitch = true;
+            break;
+          }
+        }
+      }
+      if (shouldSwitch) {
+        /*If a switch has been marked, make the switch
+        and mark that a switch has been done:*/
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+        //Each time a switch is done, increase this count by 1:
+        switchcount ++;      
+      } else {
+        /*If no switching has been done AND the direction is "asc",
+        set the direction to "desc" and run the while loop again.*/
+        if (switchcount == 0 && dir == "asc") {
+          dir = "desc";
+          switching = true;
+        }
+      }
+    }
+  }</script>
+{% endblock content %}

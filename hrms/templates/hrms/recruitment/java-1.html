@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href=" {% static 'hrms/css/index.css'%} " />
+    <title>Java developer</title>
+  </head>
+  <body>
+    <div class="job-description">
+      <header>
+        <h1>Java Developer</h1>
+        <div class="location">
+          <i class="fa-solid fa-location-dot"></i>
+          <small>Ho Chi Minh | <span>Full time</span></small>
+        </div>
+        <hr />
+      </header>
+      <section class="container">
+        <h3>What you will do</h3>
+        <ul>
+          <li class="required-item">
+            Developing and enhancement large scale systems using Java
+            technologies: Collection/Insurance feature, Loan/Saving/Investing
+            feature, Mobile App Platform, Delivery Services. Contribute in all
+            phases of the development lifecycle;
+          </li>
+          <li class="required-item">
+            Write well designed, testable, efficient code;
+          </li>
+          <li class="required-item">
+            Ensure designs are in compliance with specifications;
+          </li>
+        </ul>
+        <h3>What you will need</h3>
+        <ul>
+          <li class="required-item">
+            Have Degree in Computer Science or related fields;
+          </li>
+          <li class="required-item">
+            2+ years experience at server-side languages such as Java;
+          </li>
+          <li class="required-item">
+            Good knowledge of data structures, system design and algorithms;
+          </li>
+        </ul>
+        <a href="{% url 'hrms:application' %}" class="btn"
+          >Apply For This Position</a
+        >
+      </section>
+    </div>
+    <!-- <script src="{% static 'hrms/js/index.js'%}"></script> -->
+    <script>
+      var title = document.querySelector("h1").textContent;
+      sessionStorage.setItem("title", title);
+    </script>
+  </body>
+</html>

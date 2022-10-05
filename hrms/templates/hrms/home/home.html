@@ -1,0 +1,102 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href=" {% static 'hrms/css/style.css'%} " />
+    <style>
+      .body-bg {
+        background: linear-gradient(to right, #b8d5d9, #d0eff2);
+        height: 100vh;
+      }
+
+      .body-bg .content img {
+        transform: translateY(25%);
+      }
+
+      .body-bg .footer_pnf {
+        margin-bottom: 0;
+      }
+      .btn-orange {
+        background: #2c5951; /* fallback for old browsers */
+        /* background: -webkit-linear-gradient(to right, #F37335, #FDC830);  Chrome 10-25, Safari 5.1-6 */
+        /* background: linear-gradient(to right, yellow, red); W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+      }
+      .btn-selenium {
+        background: #2c5951; /* fallback for old browsers */
+        /* background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29);  Chrome 10-25, Safari 5.1-6 */
+        /* background: linear-gradient(to right, blue, red); W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+      }
+
+      .body-bg .container h1 {
+        color: #333461;
+      }
+
+      .navbar-footer {
+        transform: translateY(20px);
+      }
+    </style>
+    <title>Home</title>
+  </head>
+  <body class="body-bg">
+    <section class="container">
+      <nav class="navbar navbar-light mt-3 mb-2">
+        <h1 class="display-4 mt-2 text-right">
+          <a
+            href=" {% url 'hrms:jobHiring' %} "
+            class="btn btn-selenium text-light"
+          >
+            We are Hiring !!!
+          </a>
+          &emsp; &emsp; &emsp; &emsp; &emsp; PnF Human Resource Management
+        </h1>
+      </nav>
+
+      <div class="row content">
+        <div class="col-lg-6">
+          <img
+            src="{% static 'hrms/images/logo2-removebg.png' %}"
+            class="img-fluid"
+            alt="logo"
+          />
+        </div>
+        <div class="col-lg-6">
+          <div class="card mb-3 shadow">
+            <div class="card-header btn-orange pt-4">
+              <p class="lead" style="color: white">
+                Pooh and Friends Company Introduction
+              </p>
+            </div>
+
+            <div class="card-body">
+              <p class="lead text-justify">
+                The Human resource management is the strategic approach to the
+                effective management of people in a company or organization such
+                that they help their business gain a competitive advantage. It
+                is designed to maximize employee performance in service of an
+                employer's strategic objectives.
+              </p>
+              <hr />
+              <p class="lead text-justify">
+                Pooh and Friends Human Resource Management is located at Ho Chi
+                Minh City, Vietnam. Company is working in a website.
+              </p>
+              <a
+                href=" {% url 'hrms:login' %} "
+                class="btn btn-block btn-selenium text-light"
+              >
+                Administrator &rarr;
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <nav class="navbar navbar-light navbar-footer">
+      <p class="display-4 mx-auto footer_pnf">DEVELOPED BY PnF</p>
+    </nav>
+  </body>
+</html>
